@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "Using Glistix"
+
+[output.html]
+git-repository-url = "https://github.com/Glistix/book"
+edit-url-template = "https://github.com/Glistix/book/edit/main/{path}"
