@@ -10,7 +10,7 @@ Here are some of the most common compiler commands.
     - An initial Git repository with a `.gitignore` file.
 
 2. `glistix build [--target nix]`: Builds your project to `build/dev/<target>`, by default the target specified in your `gleam.toml` unless you specify `--target <target>`.
-    - None that if no target is specified in your `gleam.toml`, the compiler **will default to `erlang`** to be compatible with existing Gleam projects. As such, make sure to specify `target = "nix"` in your `gleam.toml`.
+    - Note that, if no target is specified in your `gleam.toml`, the compiler **will default to the `erlang` target** to be compatible with existing Gleam projects. As such, make sure to specify `target = "nix"` in your `gleam.toml`.
 
 3. `glistix run [--target nix]`: Runs your project's main function in the target specified either by `--target` or by `gleam.toml` (or `erlang` by default, for the same reason as before).
     - For the Nix target, this will call `nix-instantiate` to evaluate your `packagename.gleam`'s `main` function.
