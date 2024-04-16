@@ -1,0 +1,6 @@
+[book]
+authors = ["PgBiel"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Using Glistix"
