@@ -6,5 +6,4 @@ When you run `glistix new`, the compiler will generate a project which should co
 2. `src/` contains the source code of your package. This can contain both `.gleam` files and also FFI files (`.nix` for the Nix target). A `packagename.gleam` file with a `main` public function with zero arguments is expected if your package is not a Gleam library (but rather made to be used within Nix). If present, you can check its output with `gleam run`.
 3. `test/` optionally contains a `packagename_test.gleam` file containing a single `main` function with zero arguments which
 is called when running `gleam test`. Use this with [`glistix_gleeunit`](https://github.com/glistix/gleeunit) or some other test runner.
-4. `priv/` is an optional folder for assets and other general files needed by your project and is not present by default.
-5. `include/` is an optional folder that other apps using your project should be aware of and is not present by default.
+4. `priv/` is an optional folder for assets and other general files needed by your project and is not present by default. It is, however, symlinked to `build/dev/<target>/<package>` upon build.
