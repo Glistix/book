@@ -8,10 +8,10 @@
     - [Installation](./getting-started/installation.md)
     - [Basic Usage]()
     - [Patching dependencies]()
-- [Compiler Tools]()
-    - [Project structure]()
-    - [Sharing and using your package]()
-    - [Command-Line Interface]()
+- [Using the Compiler](./using-compiler/README.md)
+    - [Project structure](./using-compiler/project-structure.md)
+    - [Sharing and using your package](./using-compiler/sharing-package.md)
+    - [Command-Line Interface](./using-compiler/command-line-interface.md)
 
 # Nix
 
