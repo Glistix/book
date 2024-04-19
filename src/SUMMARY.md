@@ -2,6 +2,12 @@
 
 [Introduction](README.md)
 
+- [About Glistix](./about/README.md)
+    - [Goals & Roadmap](./about/goals-roadmap.md)
+    - [Known Issues](./about/known-issues.md)
+    - [Contributing]()
+    - [Thanks](./about/thanks.md)
+
 # Usage
 
 - [Getting Started](./getting-started/README.md)
@@ -32,8 +38,3 @@
     - [General modifications](./contributors/architecture/general-modifications.md)
     - [Nix Backend]()
     - [CLI modifications]()
-
-# Misc
-
-- [Goals]()
-- [Thanks](./thanks.md)
