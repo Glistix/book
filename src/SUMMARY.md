@@ -28,9 +28,10 @@
 # Contributors
 
 - [How to Contribute]()
-- [Glistix Architecture]()
+- [Glistix Architecture](./contributors/architecture/README.md)
+    - [General modifications](./contributors/architecture/general-modifications.md)
     - [Nix Backend]()
-    - [CLI code]()
+    - [CLI modifications]()
 
 # Misc
 
