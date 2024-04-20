@@ -2,6 +2,12 @@
 
 Here is a non-exhaustive list of relevant issues and warnings to consider when using Glistix.
 
+## Table of Contents
+
+- [Missing tail-call optimization](#missing-tail-call-optimization)
+- [Lazy evaluation](#lazy-evaluation)
+    - [Discarded expressions](#discarded-expressions)
+
 ## Missing tail-call optimization
 
 Compared to Gleam's Erlang and JavaScript targets, Glistix's Nix target **does not have tail-call optimization.** This means that **recursion continually grows the stack** and, as such, **it is possible to trigger stack overflows** on Nix through deep enough recursion. As a consequence, at least for now, **you should avoid relying on recursion to process very large data.**
