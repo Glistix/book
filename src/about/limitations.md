@@ -27,7 +27,7 @@ Nix code is **evaluated lazily**, meaning **an expression isn't evaluated until 
 
 Due to the above, it is natural that **expressions not bound to any variables would never be evaluated** (in principle), due to laziness. To tackle that, **Glistix ensures all discarded expressions are evaluated** (at least shallowly). For example:
 
-```rs
+```gleam
 pub fn main() {
   // The panic below won't run due to laziness.
   // The variable is never used.
@@ -57,7 +57,7 @@ pub fn main() {
 
 To force deep evaluation of expressions, you can use the `nix.deep_eval` function from [the `glistix_nix` package](https://github.com/glistix/nix):
 
-```rs
+```gleam
 import glistix/nix
 
 pub fn main() {
@@ -69,7 +69,7 @@ pub fn main() {
 
 Additionally, **assertions are always evaluated:**
 
-```rs
+```gleam
 pub fn main() {
     // This will cause a panic, even though
     // this expression doesn't bind any variables.
