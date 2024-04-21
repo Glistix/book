@@ -3,7 +3,7 @@ authors = ["PgBiel"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Using Glistix"
+title = "The Glistix Handbook"
 
 [output.html]
 additional-js = ["theme/highlightjs-gleam.js", "theme/highlightjs-nix.min.js", "theme/highlightjs-early.js"]
