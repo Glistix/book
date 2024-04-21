@@ -6,5 +6,6 @@ src = "src"
 title = "Using Glistix"
 
 [output.html]
+additional-js = ["theme/highlightjs-gleam.js", "theme/highlightjs-nix.min.js", "theme/highlightjs-early.js"]
 git-repository-url = "https://github.com/Glistix/book"
 edit-url-template = "https://github.com/Glistix/book/edit/main/{path}"
