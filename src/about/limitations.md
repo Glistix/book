@@ -1,4 +1,4 @@
-# Known Issues
+# Limitations
 
 Here is a non-exhaustive list of relevant issues and warnings to consider when using Glistix.
 
