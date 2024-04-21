@@ -1,5 +1,7 @@
 # Types
 
+## Built-in types
+
 The table below shows how Glistix translates most common Gleam types into Nix types.
 
 <table>
@@ -68,3 +70,62 @@ The table below shows how Glistix translates most common Gleam types into Nix ty
   </tr>
 </tbody>
 </table>
+
+## Records
+
+User-created types are translated to Nix as follows:
+
+1. **Types without constructors only exist in the Gleam type system.** Therefore, **it is not possible to create a type without a constructor** unless you do it **through FFI**. This is useful to create Gleam representations of Nix types. For example, you can define an `Array` type which you can't construct through Gleam, but can through FFI:
+
+    ```gleam
+    // Only constructible via FFI
+    pub type Array(a)
+
+    /// Create a new Array
+    @external(nix, "./ffi.nix", "createArray")
+    pub fn new() -> Array(a)
+    ```
+
+    Then, on the Nix side (`./ffi.nix`):
+
+    ```nix
+    let
+      createArray = { }: [ ];
+    in { inherit createArray; }
+    ```
+
+    Otherwise, the `Array` type **is not known to Nix at all** (even if it understands the underlying representation of instances of `Array`).
+
+2. **Records with constructors are always represented by attribute sets.** Those attribute sets contain, **at least, their constructors' tags**, as well as **any fields**. For example:
+    ```gleam
+    pub type Example {
+      Constructor1
+      Constructor2(Int, Float)
+      Constructor3(field: Int, inherit: Int)  // Nix keyword? No problem
+      Constructor4(Int, mixed: Int, Float, Int)
+    }
+    ```
+
+    The module above compiles to
+
+    ```nix
+    let
+      # ! A record without fields is not a function !
+      Constructor1 = { __gleamTag = "Constructor1"; };
+
+      Constructor2 = x0: x1: { __gleamTag = "Constructor2"; _0 = x0; _1 = x1; };
+
+      Constructor3 =
+        field: inherit':
+          { __gleamTag = "Constructor3"; inherit field; "inherit" = inherit'; };
+
+      Constructor4 =
+        x0: mixed: x2: x3:
+          { __gleamTag = "Constructor4"; inherit mixed; _0 = x0; _2 = x2; _3 = x3; };
+    in
+    { inherit Constructor1 Constructor2 Constructor3 Constructor4; }
+    ```
+
+    Note that **positional fields become `_N` fields,** where `N` is the field's position. **Named fields keep their names, even if they are Nix keywords.**
+
+    You can **construct these records in Nix** by just **calling their constructors.** In this case, `Constructor1` can be used directly; `Constructor2(a, b)` in Gleam would correspond to `Constructor2 a b` in Nix; and so on.
