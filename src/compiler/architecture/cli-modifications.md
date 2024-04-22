@@ -13,3 +13,5 @@ We have changed the following parts of the CLI (crate `compiler-cli`):
 4. `dependency.rs` (resolving versions for the `manifest.toml`):
     - Implement `local-overrides` from `[glistix.preview]` by replacing provided (local/Git) dependencies with what the root package specified for them, if overridden by the root.
 5. `fs.rs`: Added Git operations used by `new.rs`.
+
+`glistix build` (`build.rs`) wasn't directly modified, but it now supports `--target nix` as well.
