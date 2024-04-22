@@ -31,10 +31,9 @@
     - [Nixpkgs]()
     - [NixOS modules]()
 
-# Contributors
+# Compiler
 
-- [How to Contribute]()
-- [Glistix Architecture](./contributors/architecture/README.md)
-    - [General modifications](./contributors/architecture/general-modifications.md)
+- [Glistix Architecture](./compiler/architecture/README.md)
+    - [General modifications](./compiler/architecture/general-modifications.md)
     - [Nix Backend]()
     - [CLI modifications]()
