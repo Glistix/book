@@ -35,5 +35,5 @@
 
 - [Glistix Architecture](./compiler/architecture/README.md)
     - [General modifications](./compiler/architecture/general-modifications.md)
-    - [Nix Backend]()
+    - [Nix Backend](./compiler/architecture/nix-backend.md)
     - [CLI modifications]()
