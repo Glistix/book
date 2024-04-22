@@ -22,6 +22,9 @@ This lead to changes across many files in the compiler, mostly related to replic
 
 - We have **customized several CLI commands** to add Nix-specific functionality. This includes at least `glistix new`, `glistix build`, `glistix run` and `glistix test`. Please check the dedicated chapter for CLI more information.
 
+- We have added a `[glistix]` section to `gleam.toml` for Glistix-specific configuration. Right now, it includes the following sections:
+    1. `[glistix.hex-patch]`: allows specifying dependency metadata to override when publishing to Hex. For example, specify `package = ">= 0.34.0 and < 2.0.0"` to tell Hex you depend on that package with that version (**that will be your effective dependency** for packages which depend on yours via Hex), whereas in `[dependencies]` you depend on the package to be available locally (only effective when using the package locally or running tests etc.). **This is a temporary workaround while we don't have proper dependency patching.** It is necessary because the stdlib needs to be patched to include Nix support, which is done through local dependencies on Git submodules.
+
 - We have added **Nix syntax highlighting support** to **packages' generated documentation** (through `glistix docs`). The relevant `highlight.js`-compatible file is at `compiler-core/templates/docs-js/highlightjs-nix.min.js`.
 
 - It is worth noting that we have **reutilized most of the Gleam compiler's GitHub Actions workflows** for our own usage in CI and other tasks. However, **noteworthy changes were made** to better adapt them to Glistix's needs.
