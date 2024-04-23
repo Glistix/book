@@ -14,10 +14,10 @@
     - [Installation](./getting-started/installation.md)
     - [Basic Usage](./getting-started/basic-usage.md)
     - [Sharing and using your package](./getting-started/sharing-package.md)
-    - [Patching dependencies]()
 - [Using the Compiler](./using-compiler/README.md)
     - [Project structure](./using-compiler/project-structure.md)
     - [Command-Line Interface](./using-compiler/command-line-interface.md)
+    - [Overriding incompatible packages](./using-compiler/overriding-packages.md)
 
 # Nix
 
