@@ -7,3 +7,4 @@ When you run `glistix new`, the compiler will generate a project which should co
 3. `test/` optionally contains a `packagename_test.gleam` file containing a single `main` function with zero arguments which
 is called when running `gleam test`. Use this with [`glistix_gleeunit`](https://github.com/glistix/gleeunit) or some other test runner.
 4. `priv/` is an optional folder for assets and other general files needed by your project and is not present by default. It is, however, symlinked to `build/dev/<target>/<package>` upon build.
+5. `external/` is an optional folder for **external dependencies cloned locally as Git submodules** (see ["Overriding incompatible packages"](./overriding-packages.md)).
