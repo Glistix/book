@@ -23,6 +23,8 @@
 
 - [The Nix Target](./nix/target/README.md)
     - [Types](./nix/target/types.md)
+    - [Modules](./nix/target/modules.md)
+    - [Functions](./nix/target/functions.md)
     - [Language Constructs]()
     - [Standard Library]()
     - [Nix library]()
