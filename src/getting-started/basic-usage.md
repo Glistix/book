@@ -7,7 +7,11 @@ After [installing the Glistix compiler,](./installation.md) here's how you can s
 
     - Note that we currently **do not generate a GitHub Actions CI workflow file**. We'd love a contribution to get this going!
 
-2. You can edit `src` to customize the Gleam code, as well as edit `gleam.toml` to your liking. You can use `glistix add name` to add a dependency from Hex.
+2. You can edit `src` to customize the Gleam code, as well as edit `gleam.toml` to your liking.
+
+    - You can use `glistix add name` to add a dependency from Hex. For instance, you may want to **use the [`glistix_nix` package](https://github.com/glistix/nix) to easily access certain Nix built-in types** from Gleam, which can be done with `glistix add glistix_nix`.
+
+        - If your desired dependency doesn't support Nix, **you will have to use a fork patched for Nix support.** Check ["Overriding incompatible packages"](../using-compiler/overriding-packages.md) for more information.
 
     - Note that Git dependencies are not yet supported, so you'll have to use `git submodule add --name NAME URL external/NAME` to clone each one, and then add it as a local dependency (`package = { path = "./external/NAME" }`). See [Limitations](../about/limitations.md) for more information.
 
