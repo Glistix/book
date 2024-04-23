@@ -15,7 +15,7 @@ The Gleam ecosystem, whose packages are mostly available through [Hex](https://h
 
 However, Gleam does not have a requirement overriding system yet (tracked at [upstream issue #2899](https://github.com/gleam-lang/gleam/issues/2899), so we **depend on local and Git dependencies to those forks**, as **those kinds of dependencies have priority over transitive Hex dependencies** (so we get some initial patching support that way). Additionally, however, **Git dependencies aren't natively supported** (tracked at [upstream issue #1338](https://github.com/gleam-lang/gleam/issues/1338)), so we have to use **local dependencies to Git submodules** in order to use patches hosted in external Git repositories.
 
-For more information, including **steps to override a package**, please check the page on ["Overriding incompatible packages"](../using-compiler/overriding-packages.md).
+For more information, including **steps to override a package**, please check the page on ["Overriding incompatible packages"](../recipes/overriding-packages.md).
 
 ## Missing tail-call optimization
 

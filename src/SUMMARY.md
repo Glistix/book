@@ -13,11 +13,12 @@
 - [Getting Started](./getting-started/README.md)
     - [Installation](./getting-started/installation.md)
     - [Basic Usage](./getting-started/basic-usage.md)
-    - [Import a package from Nix](./getting-started/import-from-nix.md)
 - [Using the Compiler](./using-compiler/README.md)
     - [Project structure](./using-compiler/project-structure.md)
     - [Command-Line Interface](./using-compiler/command-line-interface.md)
-    - [Overriding incompatible packages](./using-compiler/overriding-packages.md)
+- [Recipes](./recipes/README.md)
+    - [Import a package from Nix](./recipes/import-from-nix.md)
+    - [Overriding incompatible packages](./recipes/overriding-packages.md)
 
 # Nix
 
