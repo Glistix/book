@@ -12,7 +12,7 @@
 
 - [Getting Started](./getting-started/README.md)
     - [Installation](./getting-started/installation.md)
-    - [Basic Usage]()
+    - [Basic Usage](./getting-started/basic-usage.md)
     - [Patching dependencies]()
 - [Using the Compiler](./using-compiler/README.md)
     - [Project structure](./using-compiler/project-structure.md)
