@@ -81,18 +81,17 @@ Once that's in place, **future calls to `lib.loadGlistixPackage { }` will automa
 
 The major downside, of course, is **having to keep the `output/` folder up-to-date** whenever you make relevant changes to your Gleam code. The tradeoffs should be considered.
 
-### Description of the generated flake outputs
+### Using `loadGlistixPackage`
 
+The default `lib.loadGlistixPackage` function exported by packages, generated through `glistix new`, is basically a wrapper over the same function exported by the compiler itself. It takes the following additional named arguments (in `{ ... }`):
 
+1. `system`: Used to select the derivation of the Glistix compiler with which to build the package from scratch (if build output isn't cached). Defaults to `builtins.currentSystem`, if available.
+2. `glistix`: Used to override the Glistix compiler derivation entirely, if desired.
 
-1. `packages.<system>.default`: A derivation which **builds your Glistix project from scratch** (this uses the Glistix compiler, which might have to be built from source as well). The derivation's `out` output contains a `dev/nix` folder from Glistix's build output, including `packagename.nix` (with your `main` lambda exported, for example) as well as other Nix files (compiled from your source Gleam files).
+The following arguments are inherited from the compiler's function:
 
-    - This uses Glistix's `builders.<system>.buildGlistixPackage` output under the hood.
-
-    - While using this package is theoretically ideal, in practice, the overhead of having to **compile Glistix _and_ your project from scratch** is noticeable, which is why we made an alternative: caching the build outputs and using `lib.loadGlistixPackage`.
-
-2. `lib.loadGlistixPackage`: A lambda with named arguments (or `{ }` to just use the defaults) which is prepared for a setup in which you **commit your build output to the repository** for ease of use (so you don't have to specify the system or build Glistix to use your generated Nix code). By default, it checks the `output/nix` folder; if it exists, calls `import` on `packagename.nix` by default and returns the output of running the exported main function. If it doesn't exist, it will fall back to building your project using the given `pkgs`, if available; otherwise, the given `system`, if available; or `builtins.currentSystem`, if that's available as well. If all options fail, importing your package will fail.
-
-    - This is better for users of your package, as they don't have to compile using Glistix (or Glistix itself) before using your project, but might incur a bit of maintenance overhead, since you'll have to manually run `mv build/dev/nix -T output/nix` (that is, move the results of `glistix build` to `output/nix`) and commit the changes for each completed build you'd like your Nix library users to use.
-
-This page is under construction.
+1. `package`: Name of the package to take from the build output. Defaults to the top-level project's package (read from `gleam.toml`), if available, otherwise fails.
+2. `module`: Gleam module to read from the build output, in the form `a/b/c` (no extension). Defaults to the value of `package`, where the `main` function is usually located.
+3. `output`: The cached build output path. If it exists, it will be used over compiling the package from scratch. This defaults to `(src)/output`.
+4. `derivation`: The derivation which builds the package from scratch. This is provided by the package itself usually, so this is only here to override it if you want to.
+5. `nixRoot`: Defaults to `dev/nix`, indicates the root of the built Nix files.
