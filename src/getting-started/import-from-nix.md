@@ -45,7 +45,7 @@ With Flakes, you'd add your project as an input. For example:
       # or as a parameter to a builder, or anything else, really.
       outputName.x86_64-linux.default = somethingElse (funcResult "x86_64-linux");
       outputName.x86_64-darwin.default = somethingElse (funcResult "x86_64-darwin");
-    }
+    };
 }
 ```
 
