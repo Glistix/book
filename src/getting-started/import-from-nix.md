@@ -53,7 +53,7 @@ And that's it! You can now use your Gleam project within other Nix projects.
 
 <div class="warning">
 
-When invoking a Gleam function from Nix, **make sure to use the correct representation of Gleam's types,** as well as **follow the conventions for calling Gleam functions.** Read the ["Nix Target" chapter](../nix/target/README.md) for more information.
+When invoking a Gleam function from Nix, **make sure to use the correct representation of Gleam's types,** as well as **follow the conventions for calling Gleam functions.** Read the ["Nix Target" chapter](../nix/target) for more information.
 
 </div>
 
