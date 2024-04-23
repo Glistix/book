@@ -1,12 +1,12 @@
-# Sharing and using your package
+# Import a package from Nix
 
-Great, you've made a neat little Glistix project which you now want to use, maybe for some Nix derivation you're configuring in some other repository, or for your NixOS configuration, for example. Your `main` function under `src/packagename.gleam` is ready and returns some functions and values in an attribute set which you plan to use in those projects (again an example).
+Great, you've made an awesome Glistix project which you now **want to use in Nix,** maybe for some Nix derivation you're configuring in some other repository, or for your NixOS configuration, for example. Your `main` function under `src/packagename.gleam` is ready and returns some functions and values in an attribute set which you plan to use in those projects (again an example).
 
-Now, **how will your other Nix projects access your Gleam `main` function?**
+Now, **how will your other Nix projects access your Gleam `main` function?** (Or any other function!)
 
-Luckily for us, `glistix new` **automatically creates a `flake.nix` file** for our new project, as well as `default.nix`. This makes it **easy to import your Glistix project as part of another Nix project:** all you have to do is **evaluate one of those two Nix files** (the former with [`builtins.getFlake`](https://nixos.org/manual/nix/stable/language/builtins.html#builtins-getFlake) or as a flake input of another flake, the latter with [`import`](https://nixos.org/manual/nix/stable/language/builtins.html#builtins-import)).
+Luckily for us, `glistix new` **automatically creates a `flake.nix` file** for our new project, as well as `default.nix`. This makes it **easy to import your Glistix project as part of another Nix project:** everything you need **is exported by these two Nix files** (the former with [`builtins.getFlake`](https://nixos.org/manual/nix/stable/language/builtins.html#builtins-getFlake) or as a flake input of another flake, the latter with [`import`](https://nixos.org/manual/nix/stable/language/builtins.html#builtins-import)).
 
-This is because both files (with `default.nix` just mirroring `flake.nix`) export `lib.loadGlistixPackage`. This is a **Nix function** with the sole purpose of **importing your Gleam code transpiled to Nix**. You simply call it with `lib.loadGlistixPackage { }` and, by default, **it will import your package's main module** (with the same name as your package, which usually has the `main` function). You can override the imported module with `lib.loadGlistixPackage { module = "my/module"; }`, for example.
+This is because both files (with `default.nix` just mirroring `flake.nix`) export `lib.loadGlistixPackage`. This is a **Nix function** with the sole purpose of **importing your Gleam code transpiled to Nix**. You simply call it with `lib.loadGlistixPackage { }` and, by default, **it will import your package's main module** (with the same name as your package, which usually has the `main` function). You can **pick the imported module** with `lib.loadGlistixPackage { module = "my/module"; }`, for example.
 
 It does that by **invoking the Glistix compiler to build your project from scratch**, and then importing the resulting build folder (moved to somewhere at `/nix/store`). However, since that process depends on the Glistix compiler, **that might trigger a full compilation of Glistix itself, which is slow.** Therefore, **you might want to cache the built Nix files in your repository** to speed up the process - more at the next section.
 
@@ -50,6 +50,12 @@ With Flakes, you'd add your project as an input. For example:
 ```
 
 And that's it! You can now use your Gleam project within other Nix projects.
+
+<div class="warning">
+
+When invoking a Gleam function from Nix, **make sure to use the correct representation of Gleam's types,** as well as **follow the conventions for calling Gleam functions.** Read the ["Nix Target" chapter](../nix/target/README.md) for more information.
+
+</div>
 
 ### Caching your built Nix files
 

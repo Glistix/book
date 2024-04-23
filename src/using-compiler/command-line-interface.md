@@ -3,10 +3,9 @@
 Here are some of the most common compiler commands.
 
 1. `glistix new`: An essential command, creates a new Glistix project for you with batteries included, containing:
-    - Several basic directories and files of the project structure expected by the compiler;
-        - This includes an initial `gleam.toml` tuned for Glistix-specific defaults;
-    - An initial `flake.nix` (see ["Sharing and using your package"](../getting-started/sharing-package.md));
-    - GitHub Actions workflows for CI, as well as releasing a new version of your package (triggered by creating a `v{version}` tag);
+    - Several basic directories and files of the project structure expected by the compiler (see ["Project structure"](./project-structure.md));
+        - This includes an initial `gleam.toml` tuned for Glistix-specific defaults.
+    - An initial `flake.nix` (see ["Import a package from Nix"](../getting-started/import-from-nix.md));
     - An initial Git repository with a `.gitignore` file.
 
 2. `glistix build [--target nix]`: Builds your project to `build/dev/<target>`, by default the target specified in your `gleam.toml` unless you specify `--target <target>`.

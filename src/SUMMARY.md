@@ -13,7 +13,7 @@
 - [Getting Started](./getting-started/README.md)
     - [Installation](./getting-started/installation.md)
     - [Basic Usage](./getting-started/basic-usage.md)
-    - [Sharing and using your package](./getting-started/sharing-package.md)
+    - [Import a package from Nix](./getting-started/import-from-nix.md)
 - [Using the Compiler](./using-compiler/README.md)
     - [Project structure](./using-compiler/project-structure.md)
     - [Command-Line Interface](./using-compiler/command-line-interface.md)
