@@ -27,7 +27,7 @@
     - [Types](./nix/target/types.md)
     - [Modules](./nix/target/modules.md)
     - [Functions](./nix/target/functions.md)
-    - [Language Constructs]()
+    - [Expressions]()
     - [Standard Library](./nix/target/stdlib.md)
     - [Nix bindings library](./nix/target/nix-lib.md)
 - [Tapping into the Nix Ecosystem]()
