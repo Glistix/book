@@ -10,6 +10,12 @@ This is because both files (with `default.nix` just mirroring `flake.nix`) expor
 
 It does that by **invoking the Glistix compiler to build your project from scratch**, and then importing the resulting build folder (moved to somewhere at `/nix/store`). However, since that process depends on the Glistix compiler, **that might trigger a full compilation of Glistix itself, which is slow.** Therefore, **you might want to cache the built Nix files in your repository** to speed up the process - more at the next section.
 
+<div class="warning">
+
+When in **Nix's pure evaluation mode** (e.g. when using Flakes without `--impure`), you will have to **specify the current system** in `package.lib.loadGlistixPackage { system = "system name"; }` (e.g. `"x86_64-linux"`), as the package would have to be built using a Glistix derivation (which depends on the system), **unless that package caches build output** as explained in the section below (in which case the system isn't necessary at all, as the Nix files are ready to be imported, so no build occurs).
+
+</div>
+
 As an example, let's assume your Glistix project is stored in a **subfolder of your main Nix project.** You can then import it like this:
 
 ```nix
