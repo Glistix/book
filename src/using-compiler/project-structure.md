@@ -9,4 +9,4 @@ is called when running `gleam test`. Use this with [`glistix_gleeunit`](https://
 4. `priv/` is an optional folder for assets and other general files needed by your project and is not present by default. It is, however, symlinked to `build/dev/<target>/<package>` upon build.
 5. `external/` is an optional folder for **external dependencies cloned locally as Git submodules** (see ["Overriding incompatible packages"](../recipes/overriding-packages.md)).
 
-Additionally, some projects may opt into creating an `output/` folder to cache build output for ease of use from Nix (see ["Import a package from Nix"](../recipes/import-from-nix.md)).
+Additionally, some projects may opt into creating an `output/` folder to cache build output for ease of use from Nix (see ["Import a Gleam package in Nix"](../recipes/import-in-nix.md)).

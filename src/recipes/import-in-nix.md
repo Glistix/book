@@ -1,4 +1,4 @@
-# Import a package from Nix
+# Import a Gleam package in Nix
 
 Great, you've made an awesome Glistix project which you now **want to use in Nix,** maybe for some Nix derivation you're configuring in some other repository, or for your NixOS configuration, for example. Your `main` function under `src/packagename.gleam` is ready and returns some functions and values in an attribute set which you plan to use in those projects (again an example).
 

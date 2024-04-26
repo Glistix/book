@@ -25,4 +25,4 @@ After [installing the Glistix compiler,](./installation.md) here's how you can s
 
 Nice! Your project is now **ready to be used** by both Nix users (which will use your Gleam code compiled to Nix) and also other Glistix users.
 
-To **import a Gleam module in your project from within Nix,** the `default.nix` and `flake.nix` files in your new project export a `lib.loadGlistixPackage { module = "module/name"; }` function, which, when used, will give you an attribute set with all names exported by that module, so you can use its record constructors, constants and functions from within Nix. See ["Import a package from Nix"](../recipes/import-from-nix.md) for more information.
+To **import a Gleam module in your project from within Nix,** the `default.nix` and `flake.nix` files in your new project export a `lib.loadGlistixPackage { module = "module/name"; }` function, which, when used, will give you an attribute set with all names exported by that module, so you can use its record constructors, constants and functions from within Nix. See ["Import a Gleam package in Nix"](../recipes/import-in-nix.md) for more information.

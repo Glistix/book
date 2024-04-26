@@ -18,7 +18,7 @@
     - [Project Structure](./using-compiler/project-structure.md)
     - [Project Configuration](./using-compiler/project-configuration.md)
 - [Recipes](./recipes/README.md)
-    - [Import a package from Nix](./recipes/import-from-nix.md)
+    - [Import a Gleam package in Nix](./recipes/import-in-nix.md)
     - [Overriding incompatible packages](./recipes/overriding-packages.md)
 
 # Nix
