@@ -5,7 +5,7 @@ After [installing the Glistix compiler,](./installation.md) here's how you can s
 1. Use the `glistix new NAME` command to create a new Glistix project.
     - This command will set (almost) everything up for you, including initialize a Git repository, initialize the project structure (`gleam.toml`, `src/`, `test/` etc.), prepare essential `*.nix` files, and even clone Glistix's standard library to `external/stdlib` as a Git submodule (this is a workaround which is currently needed while we don't have Git dependencies!).
 
-    - Note that we currently **do not generate a GitHub Actions CI workflow file**. We'd love a contribution to get this going!
+    - We also **generate a default GitHub Actions CI workflow file** which tries to build your project through `flake.nix`. You can add `--skip-github` to `glistix new` to opt out of the creation of this file (or just delete it).
 
 2. You can edit `src` to customize the Gleam code, as well as edit `gleam.toml` to your liking.
 
