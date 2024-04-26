@@ -1,5 +1,7 @@
 # glistix-book
 
+**Mirrors:** [**GitHub**](https://github.com/glistix/book) | [**Codeberg**](https://codeberg.org/glistix/book)
+
 Welcome to the home of Glistix's documentation.
 
 Feel free to open issues or pull requests suggesting changes.
