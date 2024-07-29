@@ -10,6 +10,7 @@ This lead to changes across many files in the compiler, mostly related to replic
     - We **updated the parser** (at `compiler-core/src/parser.rs`) to add support for the `@external(nix, ..., ...)` attribute.
         - This introduced new `external_nix`-like fields in multiple structures across the compiler.
         - This required changes to `analyse.rs` in order to validate the paths and names of external Nix functions.
+        - Similarly, `format.rs` was also changed so that `@external(nix, ..., ...)` is properly kept after formatting.
     - This required a few changes in the **compiler's Cap'n Proto schema** (`compiler-core/schema.capnp` and the generated files at `compiler-core/src/generated`) in order to store information for the Nix target in cache (in particular, external Nix functions).
     - **Many compiler tests and test snapshots had to be updated** as a consequence of that and other changes.
 
