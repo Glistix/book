@@ -5,6 +5,7 @@ Glistix has applied several patches and additions to the base Gleam compiler. We
 - The most important change is the addition of a **Nix compilation target**. This is reflected as a variant in the `Target` enumeration in `compiler-core/src/build.rs`.
 This lead to changes across many files in the compiler, mostly related to replicating code otherwise meant for other targets for Nix as well.
     - We **created a Nix codegen backend** (which compiles Gleam code to Nix) for the Nix target at `compiler-core/src/nix.rs` and its submodules. There is some information about the Nix backend in the relevant section.
+        - This required creating a `Nix` structure in `compiler-core/src/codegen.rs`, whose methods manage the Nix codegen process, compiling every module in a project.
         - This also required the creation of a `prelude.nix` file under `compiler-core/templates` to be consumed by the Nix backend.
     - We **updated the parser** (at `compiler-core/src/parser.rs`) to add support for the `@external(nix, ..., ...)` attribute.
         - This introduced new `external_nix`-like fields in multiple structures across the compiler.
