@@ -31,3 +31,5 @@ This lead to changes across many files in the compiler, mostly related to replic
 - We have added **Nix syntax highlighting support** to **packages' generated documentation** (through `glistix docs`). The relevant `highlight.js`-compatible file is at `compiler-core/templates/docs-js/highlightjs-nix.min.js`.
 
 - It is worth noting that we have **reutilized most of the Gleam compiler's GitHub Actions workflows** for our own usage in CI and other tasks. However, **noteworthy changes were made** to better adapt them to Glistix's needs.
+
+- We have **modified language tests** (in `test/language`) to **support the Nix target**. These tests run on CI.
