@@ -44,4 +44,4 @@
 - [Changelog](./compiler/changelog/README.md)
     - [Glistix v0.1.0 (2024-04-27)](./compiler/changelog/v0-1-0.md)
     - [Glistix v0.2.0 (2024-06-12)](./compiler/changelog/v0-2-0.md)
-    - [Glistix v0.3.0 (Unreleased)](./compiler/changelog/v0-3-0.md)
+    - [Glistix v0.3.0 (2024-07-29)](./compiler/changelog/v0-3-0.md)
