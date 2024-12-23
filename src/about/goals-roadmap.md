@@ -30,4 +30,6 @@ Here is a non-exhaustive list of tasks we want to eventually tackle within the G
 - [ ] Add some form of **tail-call optimization.** This depends on changes to Nix itself to be fully practical, but there might be improvements we can make in the meantime.
 - [ ] Fully decide the semantics of **Nix's lazy evaluation** when using Glistix. In particular, we should take a final stance on how discarded expressions behave in this regard by default.
 - [ ] **Improve the package management and patching story.** We should cooperate with the upstream Gleam compiler to avoid future incompatibilities. Currently, our methods of overriding the Gleam standard library through Git submodules are quite manual and need replacement with proper Git dependencies together with requirement overriding.
-- [ ] **Create a playground page in which you can compile Gleam to Nix online.** Would be nice to be able to give Glistix a quick try in your web browser (maybe even in the documentation)!
+- [X] **Create a playground page in which you can compile Gleam to Nix online.** Would be nice to be able to give Glistix a quick try in your web browser (maybe even in the documentation)!
+  - **This is now available!** Try Glistix online here: [https://glistix.github.io/playground](https://glistix.github.io/playground)
+  - For more information, read the [book page about the playground.](../using-compiler/online-playground.md)

@@ -1,6 +1,8 @@
 # Basic Usage
 
-After [installing the Glistix compiler,](./installation.md) here's how you can start working on a new Glistix project straight away:
+Before you start, note that you can **give Glistix a try in your browser** without installing anything! You can try it out in the playground at [https://glistix.github.io/playground](https://glistix.github.io/playground). Read the [book page about the playground](../using-compiler/online-playground.md) for more information.
+
+Once you're ready, make sure to [install the Glistix compiler to your computer](./installation.md). Afterwards, here's how you can start working on a new Glistix project straight away:
 
 1. Use the `glistix new NAME` command to create a new Glistix project.
     - This command will set (almost) everything up for you, including initialize a Git repository, initialize the project structure (`gleam.toml`, `src/`, `test/` etc.), prepare essential `*.nix` files, and even clone Glistix's standard library to `external/stdlib` as a Git submodule (this is a workaround which is currently needed while we don't have Git dependencies!).

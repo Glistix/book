@@ -14,6 +14,7 @@
     - [Installation](./getting-started/installation.md)
     - [Basic Usage](./getting-started/basic-usage.md)
 - [Using the Compiler](./using-compiler/README.md)
+    - [Online playground](./using-compiler/online-playground.md)
     - [Command-Line Interface](./using-compiler/command-line-interface.md)
     - [Project Structure](./using-compiler/project-structure.md)
     - [Project Configuration](./using-compiler/project-configuration.md)
@@ -46,3 +47,4 @@
     - [Glistix v0.2.0 (2024-06-12)](./compiler/changelog/v0-2-0.md)
     - [Glistix v0.3.0 (2024-07-29)](./compiler/changelog/v0-3-0.md)
     - [Glistix v0.4.0 (2024-09-07)](./compiler/changelog/v0-4-0.md)
+    - [Glistix v0.5.0 (Unreleased)](./compiler/changelog/v0-5-0.md)
