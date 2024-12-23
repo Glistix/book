@@ -5,7 +5,7 @@
 - [About Glistix](./about/README.md)
     - [Goals & Roadmap](./about/goals-roadmap.md)
     - [Limitations](./about/limitations.md)
-    - [Contributing]()
+    - [Contributing](./about/contributing.md)
     - [Thanks](./about/thanks.md)
 
 # Usage
