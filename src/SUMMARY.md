@@ -48,4 +48,4 @@
     - [Glistix v0.3.0 (2024-07-29)](./compiler/changelog/v0-3-0.md)
     - [Glistix v0.4.0 (2024-09-07)](./compiler/changelog/v0-4-0.md)
     - [Glistix v0.5.0 (2024-12-23)](./compiler/changelog/v0-5-0.md)
-    - [Glistix v0.6.0 (Unreleased)](./compiler/changelog/v0-6-0.md)
+    - [Glistix v0.6.0 (2025-01-19)](./compiler/changelog/v0-6-0.md)
