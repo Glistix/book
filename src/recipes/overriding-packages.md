@@ -2,21 +2,35 @@
 
 Many **existing Gleam packages** available over Hex **will not work on Nix** by default, as **they rely on FFI with Gleam's typical targets** (Erlang and JavaScript). Most importantly, **this includes Gleam's standard library** ([`gleam_stdlib`](https://github.com/gleam-lang/stdlib)).
 
-The workaround is to **create Nix-compatible forks** of those packages. For instance, [**Glistix maintains its own fork of the standard library**](https://github.com/glistix/stdlib). To use them, however, we have the following **challenges:**
+The workaround is to **create and/or use Nix-compatible forks** of those packages. For instance, [**Glistix maintains its own fork of Gleam's standard library,** called `glistix_stdlib`](https://github.com/glistix/stdlib).
 
-1. Currently, **Gleam does not have a proper requirement overriding system** (tracked at [upstream issue #2899](https://github.com/gleam-lang/gleam/issues/2899)). As such, we have to use those forks as **local or Git dependencies.** That way, **they override transitive Hex dependencies with the same name,** thus ensuring the fork is used instead of the Hex version, even if the package appears as a transitive dependency (i.e. a dependency of a dependency, at any level).
+If those forks are **published on Hex** (which is the case of Glistix's forks, for example), then using them is **easy** - you just need to add the following line(s) under `[glistix.preview.patch]` to your configuration, and then **all of your dependencies and transitive dependencies will be using the fork** instead of the original package, providing Nix target support:
 
-2. However, **Gleam does not currently support Git dependencies** (tracked at [upstream issue #1338](https://github.com/gleam-lang/gleam/issues/1338)). As such, **we depend on local paths pointing to cloned Git submodules.**
+```toml
+# Example: patch gleam_stdlib with glistix_stdlib
+[glistix.preview.patch]
+gleam_stdlib = { name = "glistix_stdlib", version = ">= 0.34.0, < 2.0.0" }
+```
 
-3. Finally, **each fork needs to have the same name as the package it's patching** (due to a compiler requirement, while there is no built-in patching yet) and, as such, **cannot be published to Hex** (as it can't replace the patched package itself, of course).
+After adding patching with the necessary forks at `[glistix.preview.patch]` in your **top-level Glistix project**, it should be able to run under Nix.
 
-It is expected that a proper solution to these problems will be available in the future. For now, the best we have is **cloning forks as Git submodules and using them as local dependencies.**
+Please note that **patches are ignored when publishing a package to Hex** - they are only applied on **top-level projects** (those which you can `glistix run`, so, not libraries). End users are responsible for patching transitive dependencies by themselves. Therefore, **it could be interesting to warn about patches in your package docs/README** in case there are confused users of your library (assuming you are creating a library).
 
-Don't worry, though - `glistix new` **automatically patches `gleam_stdlib` for you** by setting up `gleam.toml` and cloning it as a submodule to `external/stdlib`. However, you will have to do that by yourself for any other package patches you might need (e.g. [`glistix/json`](https://github.com/glistix/json)).
+Regarding `gleam_stdlib`, don't worry - the `glistix new` command **automatically suggests patching `gleam_stdlib`** (the lines shown above are already written to the config by default). However, you will still have to add more patches by yourself for any other package patches you - or your dependencies - might need (e.g. [`glistix_json`](https://github.com/glistix/json) as a replacement for `gleam_json`).
 
-## Steps to override a package
+However, if the desired fork is not published on Hex, the above process is **not enough**: you will need to use patches to local dependencies corresponding to **Git submodules** cloned to an `external/` folder, as a workaround while Glistix does not yet support Git dependencies (they were implemented upstream on Gleam 1.9.0, which hasn't made its way to Glistix's codebase yet). This is tracked by Glistix issue [#47](https://github.com/Glistix/glistix/issues/47).
 
-The [`gleam_json` package](https://github.com/gleam-lang/json), for example, does not support the Nix target by default, while several Gleam packages depend on it, creating a problem if we want to use them. Luckily, the Glistix project maintains a Nix-compatible fork of this package at [https://github.com/glistix/json](https://github.com/glistix/json). Here's how we can use it, ensuring we can use packages which depend on `gleam_json` (and also so we can depend on it ourselves):
+In the meantime, the full instructions remain below.
+
+## Steps to override a package using Git submodules
+
+Ideally, overriding a package with a Nix-compatible fork is as simple as **patching the package to a fork published on Hex.** If the fork you want to use is on Hex, then **please use the instructions above instead** and **skip this section entirely.**
+
+However, if the fork is only available on a Git repository (such as GitHub), a separate workaround is needed, through **Git submodules.** This is only while Git dependencies are not yet available on Glistix.
+
+As an example, the [official `gleam_json` package](https://github.com/gleam-lang/json) does not support the Nix target by default, while several Gleam packages depend on it, creating a problem if we want to use those packages. Luckily, the Glistix project maintains a Nix-compatible fork of this package, `glistix_json`, at [https://github.com/glistix/json](https://github.com/glistix/json).
+
+Here's how we can use it as a Git submodule, ensuring we can use packages which depend on `gleam_json` (and also so we can depend on it ourselves):
 
 1. Run the command below to add the repository as a Git submodule of your project. We add submodules to the `external/` folder as a convention:
 
@@ -24,29 +38,23 @@ The [`gleam_json` package](https://github.com/gleam-lang/json), for example, doe
     git submodule add --name json -- https://github.com/glistix/json external/json
     ```
 
-2. Add `gleam_json` as a local dependency to that submodule at your project's `gleam.toml`:
+2. Add `gleam_json` as a regular dependency of your project at `gleam.toml`. For example:
+
+  ```toml
+  [dependencies]
+  gleam_json = ">= 2.0.0, < 3.0.0"
+  ```
+
+3. Add `glistix_json` as a patch of `gleam_json` to the `glistix_json` submodule you cloned locally at your project's `gleam.toml`:
 
     ```toml
-    [dependencies]
+    [glistix.preview.patch]
     gleam_json = { path = "./external/json" }
     ```
 
-3. To ensure your local override of `gleam_json` takes precedence over transitive local dependencies (see explanation at ["Dealing with local package conflicts when patching"](#dealing-with-local-package-conflicts-when-patching)), you can add `gleam_json` to `local-overrides` at `[glistix.preview]`, as below:
+  Please note that this patch, much like a Hex patch, is ignored if you publish your package to Hex. This section is read for top-level packages used by `glistix run` and `glistix build`, but not for any dependencies or libraries, as previously mentioned.
 
-    ```toml
-    [glistix.preview]
-    # note that 'gleam_stdlib' is there by default
-    local-overrides = ["gleam_stdlib", "gleam_json"]
-    ```
-
-4. Additionally, **if you intend on publishing your package to Hex,** which doesn't support local dependencies, you will have to use the (temporary) workaround below to tell Hex you depend on `gleam_json` from Hex instead, as explained [in the next section](#publishing-to-hex-with-patches).
-
-    ```toml
-    [glistix.preview.hex-patch]
-    gleam_json = ">= 1.0.0 and < 2.0.0" # for example
-    ```
-
-5. Finally, make sure to **update your `flake.nix` file** so that it will correctly clone the submodule when building your package through Nix. You can do so by **adding the fork's repository as a Flake input,** and then **passing its downloaded source to the `submodules` list** (which is later used as an argument to `buildGlistixPackage`), as below:
+4. Finally, make sure to **update your `flake.nix` file** so that it will correctly clone the submodule when building your package through Nix. You can do so by **adding the fork's repository as a Flake input,** and then **passing its downloaded source to the `submodules` list** (which is later used as an argument to `buildGlistixPackage`), as below:
 
     ```nix
     # At your flake.nix
@@ -93,39 +101,3 @@ Finally, make sure everything is working by running:
 1. `glistix build`, to **update the `manifest.toml`** and **ensure your package builds**;
 
 2. `nix build`, to **ensure your package can still be built from the flake.**
-
-## Publishing to Hex with patches
-
-Normally, **patching packages wouldn't let you publish your packages to Hex**, since you cannot depend on local packages as a Hex package (you must depend on other Hex packages). Therefore, as a temporary workaround, **Glistix added a `[glistix.preview.hex-patch]` setting to `gleam.toml`**, where you can **override your package's dependencies once published to Hex.** This allows you to **replace a local dependency with a Hex dependency, but only when publishing.** For example:
-
-```toml
-# ...
-[dependencies]
-# While developing, depend on your local patch of the stdlib...
-gleam_stdlib = { path = "./external/stdlib" }
-
-[glistix.preview.hex-patch]
-# However, once published to Hex, your package will depend
-# on the regular stdlib instead, for compatibility with
-# other packages.
-gleam_stdlib = ">= 0.34.0 and < 2.0.0"
-```
-
-As such, **users of your package will be responsible for patching** by themselves, but we expect patching to only be truly necessary for core packages (e.g. `gleam_stdlib`), which most Glistix users will have to patch anyway (until we get proper requirement overriding).
-
-## Dealing with local package conflicts when patching
-
-The procedure above works as **local dependencies always override transitive Hex dependencies.** However, **they do not override other local dependencies with the same name** by default.
-
-For example, if you clone both `glistix/stdlib` and `glistix/json` repositories as submodules to `external/stdlib` and `external/json` respectively, and depend on them on `gleam.toml` via `gleam_stdlib = { path = "./external/stdlib" }` and `gleam_json = { path = "./external/json" }` respectively, **you will get an error** because `gleam_json` depends on `gleam_stdlib` at `external/json/external/stdlib`, while you depend on `gleam_stdlib` at `external/stdlib`. In other words, **there are conflicting local dependencies.**
-
-To solve this, while a proper requirement overriding system isn't in place, **you can, as a temporary workaround, add the setting below** to the root package's `gleam.toml` (i.e. your project's `gleam.toml`) so that its version of `gleam_stdlib` is prioritized by the compiler:
-
-```toml
-[glistix.preview]
-# Ensure the root package's local dependency
-# on 'gleam_stdlib' is prioritized.
-local-overrides = ["gleam_stdlib"]
-```
-
-That way, Glistix will know how to solve the conflict (use `gleam_stdlib` from `external/stdlib`, not from `external/json/external/stdlib`). Note that **this setting is ignored for non-root packages** (dependencies cannot apply `local-overrides`).
