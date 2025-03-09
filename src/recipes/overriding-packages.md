@@ -12,9 +12,11 @@ If those forks are **published on Hex** (which is the case of Glistix's forks, f
 gleam_stdlib = { name = "glistix_stdlib", version = ">= 0.34.0, < 2.0.0" }
 ```
 
-After adding patching with the necessary forks at `[glistix.preview.patch]` in your **top-level Glistix project**, it should be able to run under Nix.
+You will need to add more such lines under `[glistix.preview.patch]` in the configuration of your **top-level Glistix project** until all Nix-incompatible packages have been replaced with compatible forks (you may have to create your own if no existing forks are available).
 
-Please note that **patches are ignored when publishing a package to Hex** - they are only applied on **top-level projects** (those which you can `glistix run`, so, not libraries). End users are responsible for patching transitive dependencies by themselves. Therefore, **it could be interesting to warn about patches in your package docs/README** in case there are confused users of your library (assuming you are creating a library).
+The compiler tries to add hints to compilation errors when it guesses that a dependency probably needs a patch, but in general, a dependency which fails to compile is a strong sign of incompatibility with Nix. Note that this could also indicate that you applied a patch which a dependency is incompatible with!
+
+Please note that **patches are ignored when publishing a package to Hex** - they are only applied on **top-level projects** (those which you can `glistix run`, so, not libraries). End users are responsible for patching transitive dependencies by themselves. Therefore, it could be interesting to **warn about patches in your package docs/README** in case there are confused users of your library (assuming you are creating a library). However, **patches are still useful for packages** in order to allow the package authors to execute tests with `glistix test` (test modules count as part of a top-level project).
 
 Regarding `gleam_stdlib`, don't worry - the `glistix new` command **automatically suggests patching `gleam_stdlib`** (the lines shown above are already written to the config by default). However, you will still have to add more patches by yourself for any other package patches you - or your dependencies - might need (e.g. [`glistix_json`](https://github.com/glistix/json) as a replacement for `gleam_json`).
 
@@ -42,7 +44,7 @@ Here's how we can use it as a Git submodule, ensuring we can use packages which 
 
     ```toml
     [glistix.preview.patch]
-    gleam_json = { path = "./external/json" }
+    gleam_json = { name = "glistix_json", path = "./external/json" }
     ```
 
     Please note that this patch, much like a Hex patch, is ignored if you publish your package to Hex. This section is read for top-level packages used by `glistix run`, `glistix build` and `glistix test`, but not for any dependencies or libraries, as previously mentioned.
@@ -77,10 +79,6 @@ Here's how we can use it as a Git submodule, ensuring we can use packages which 
         let
           # ... initial definitions here ...
           submodules = [
-            {
-              src = stdlib;
-              dest = "external/stdlib";
-            }
             {
               src = json;  # <-- add this here
               dest = "external/json";
