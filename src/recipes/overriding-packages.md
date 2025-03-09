@@ -38,21 +38,21 @@ Here's how we can use it as a Git submodule, ensuring we can use packages which 
     git submodule add --name json -- https://github.com/glistix/json external/json
     ```
 
-2. Add `gleam_json` as a regular dependency of your project at `gleam.toml`. For example:
-
-  ```toml
-  [dependencies]
-  gleam_json = ">= 2.0.0, < 3.0.0"
-  ```
-
-3. Add `glistix_json` as a patch of `gleam_json` to the `glistix_json` submodule you cloned locally at your project's `gleam.toml`:
+2. Add `glistix_json` to your `gleam.toml` as a patch of `gleam_json` pointing to the `glistix_json` submodule you cloned locally:
 
     ```toml
     [glistix.preview.patch]
     gleam_json = { path = "./external/json" }
     ```
 
-  Please note that this patch, much like a Hex patch, is ignored if you publish your package to Hex. This section is read for top-level packages used by `glistix run` and `glistix build`, but not for any dependencies or libraries, as previously mentioned.
+    Please note that this patch, much like a Hex patch, is ignored if you publish your package to Hex. This section is read for top-level packages used by `glistix run`, `glistix build` and `glistix test`, but not for any dependencies or libraries, as previously mentioned.
+
+3. **Optional:** If you also want to use `gleam_json` in your own project, feel free to add it as a regular dependency of your project at `gleam.toml`:
+
+    ```toml
+    [dependencies]
+    gleam_json = ">= 2.0.0, < 3.0.0"
+    ```
 
 4. Finally, make sure to **update your `flake.nix` file** so that it will correctly clone the submodule when building your package through Nix. You can do so by **adding the fork's repository as a Flake input,** and then **passing its downloaded source to the `submodules` list** (which is later used as an argument to `buildGlistixPackage`), as below:
 
@@ -98,6 +98,6 @@ Here's how we can use it as a Git submodule, ensuring we can use packages which 
 
 Finally, make sure everything is working by running:
 
-1. `glistix build`, to **update the `manifest.toml`** and **ensure your package builds**;
+1. `glistix build`, to update the `manifest.toml` and ensure your package builds;
 
-2. `nix build`, to **ensure your package can still be built from the flake.**
+2. `nix build`, to ensure your package can still be built from the flake.
