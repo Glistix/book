@@ -15,7 +15,7 @@ Once you're ready, make sure to [install the Glistix compiler to your computer](
 
         - If your desired dependency doesn't support Nix, **you will have to use a fork patched for Nix support.** Check ["Overriding incompatible packages"](../recipes/overriding-packages.md) for more information.
 
-    - Note that Git dependencies are not yet supported, so you'll have to use `git submodule add --name NAME URL external/NAME` to clone each one, and then add it as a local dependency (`package = { path = "./external/NAME" }`). See [Limitations](../about/limitations.md) for more information.
+    - Note that Git dependencies are not yet supported by Glistix. If you need those, you'll have to clone them as submodules and use as local dependencies. See [Limitations](../about/limitations.md) for more information.
 
 3. Run `glistix build` at least once, not only to make sure everything is working, but also to **generate the `manifest.toml`** (which should be checked into your repository).
 

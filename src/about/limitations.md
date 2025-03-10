@@ -4,18 +4,22 @@ Here is a non-exhaustive list of relevant issues and warnings to consider when u
 
 ## Table of Contents
 
-- [Lack of requirement overriding and Git dependencies](#lack-of-requirement-overriding-and-git-dependencies)
+- [Lack of Git dependencies](#lack-of-git-dependencies)
 - [Missing tail-call optimization](#missing-tail-call-optimization)
 - [Lazy evaluation](#lazy-evaluation)
     - [Discarded expressions](#discarded-expressions)
 
-## Lack of requirement overriding and Git dependencies
+## Lack of Git dependencies
 
 The Gleam ecosystem, whose packages are mostly available through [Hex](https://hex.pm), contains **many useful packages which can also be used with Glistix.** However, oftentimes you will find **packages which do not work on Nix,** because they **rely on FFI with the usual Gleam targets** (Erlang and JavaScript). This includes, most importantly, **Gleam's standard library**. The way to deal with this is to **use forks of those packages patched for Nix support.**
 
-However, Gleam does not have a requirement overriding system yet (tracked at [upstream issue #2899](https://github.com/gleam-lang/gleam/issues/2899)), so we **depend on local and Git dependencies to those forks**, as **those kinds of dependencies have priority over transitive Hex dependencies** (so we get some initial patching support that way). Additionally, however, **Git dependencies aren't natively supported** (tracked at [upstream issue #1338](https://github.com/gleam-lang/gleam/issues/1338)), so we have to use **local dependencies to Git submodules** in order to use patches hosted in external Git repositories.
+Since Glistix v0.7.0, this **can be easily done** through patching using `[glistix.preview.patch]`, as described at ["Overriding incompatible packages"](../recipes/overriding-packages.md).
 
-For more information, including **steps to override a package**, please check the page on ["Overriding incompatible packages"](../recipes/overriding-packages.md).
+However, that only works seamlessly for forks published on Hex. Git dependencies are supported on upstream since Gleam 1.9.0, but Glistix has not adopted that Gleam version yet, so you'll have to use them as **local dependencies to Git submodules** if Git dependencies are truly required. We hope to lift this restriction in a future Glistix version.
+
+This is tracked by Glistix issue [#47](https://github.com/Glistix/glistix/issues/47).
+
+For more information and further instructions, please check out ["Overriding incompatible packages"](../recipes/overriding-packages.md).
 
 ## Missing tail-call optimization
 
