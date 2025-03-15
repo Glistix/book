@@ -28,7 +28,7 @@ Here is a non-exhaustive list of tasks we want to eventually tackle within the G
 
 - [ ] **Add more real-world examples** and generally **make the documentation more robust.**
 - [ ] Add some form of **tail-call optimization.** This depends on changes to Nix itself to be fully practical, but there might be improvements we can make in the meantime.
-- [ ] Fully decide the semantics of **Nix's lazy evaluation** when using Glistix. In particular, we should take a final stance on how discarded expressions behave in this regard by default
+- [ ] Fully decide the semantics of **Nix's lazy evaluation** when using Glistix. In particular, we should take a final stance on how discarded expressions behave in this regard by default.
 - [ ] **Add bindings for NixOS interfaces.** Being the initial use case that sparked the development of Glistix, this is a fairly important priority. However, more fundamental compiler work has been receiving more attention at this time.
 - [X] **Improve the package management and patching story.** We should cooperate with the upstream Gleam compiler to avoid future incompatibilities. Currently, our methods of overriding the Gleam standard library through Git submodules are quite manual and need replacement with proper Git dependencies together with requirement overriding.
   - **This is now available!** Glistix has implemented its own patching system, which can be used to replace Hex packages with others, as described in [the book page about 'overriding incompatible packages'.](../recipes/overriding-packages.md). However, proper Git dependencies are left to a future update (already available on upstream).
