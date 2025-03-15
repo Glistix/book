@@ -4,26 +4,80 @@ You can configure your project through a `gleam.toml` file. Its settings are mos
 
 1. There is a new `[glistix.preview]` section for temporary settings while Glistix is in beta. It is expected that those settings will change in the future.
 
-2. Within it, you can define `local-overrides = ["list", "of", "packages"]`. For example:
-
-    ```toml
-    [glistix.preview]
-    local-overrides = ["gleam_stdlib"]
-    ```
-
-    This is used in case of **conflicts between local dependencies**. When the root package (the project) being compiled specifies some packages in that list, and the project itself depends on those packages, then the project's local dependencies are prioritized over the conflicting transitive local dependencies. (Motivation at ["Overriding incompatible packages"](../recipes/overriding-packages.md).)
-
-3. There is also a new `[glistix.preview.hex-patch]` section, which is similar to `[dependencies]`, however it **only applies when publishing your package to Hex.** This is a workaround so you can have local dependencies to Nix-compatible forks of packages, but still be able to publish a package to Hex. (More at ["Overriding incompatible packages"](../recipes/overriding-packages.md).)
+2. It contains a new `[glistix.preview.patch]` section, which is similar to `[dependencies]`, however it is used to **override transitive dependencies with other packages.** This can be used to replace dependencies with Nix-compatible forks. Note that this setting is only read for top-level projects, and ignored for libraries; end users must patch all necessary transitive dependencies by themselves. (More information at ["Overriding incompatible packages"](../recipes/overriding-packages.md).)
 
     For example:
 
     ```toml
     [dependencies]
-    # When developing locally, use stdlib patch at that path.
-    gleam_stdlib = { path = "./external/stdlib" }
-
-    [glistix.preview.hex-patch]
     # When published to Hex, depend on the normal stdlib instead.
     # Downstream users will have to patch manually.
     gleam_stdlib = ">= 0.34.0 and < 2.0.0"
+
+    [glistix.preview.patch]
+    # When developing locally, replace 'gleam_stdlib' with 'glistix_stdlib' from Hex
+    # on all transitive dependencies.
+    gleam_stdlib = { name = "glistix_stdlib", version = ">= 0.34.0 and < 2.0.0" }
+    # Can also replace with local packages.
+    gleam_json = { name = "glistix_json", path = "./external/json" }
     ```
+
+## Default configuration
+
+This is the default configuration for new Glistix projects created with `glistix new project_name`, as of Glistix v0.7.0:
+
+```toml
+name = "project_name"
+version = "1.0.0"
+target = "nix"
+
+# Fill out these fields if you intend to generate HTML documentation or publish
+# your project to the Hex package manager.
+#
+# description = ""
+# licences = ["Apache-2.0"]
+# repository = { type = "github", user = "", repo = "" }
+# links = [{ title = "Website", href = "" }]
+#
+# For a full reference of all the available options, you can have a look at
+# https://gleam.run/writing-gleam/gleam-toml/.
+
+[dependencies]
+# Use Glistix-maintained fork of the Gleam standard library with support for the
+# Nix target.
+#
+# Consider depending on gleam_stdlib instead if you're publishing a package to
+# non-Glistix users on Hex (Glistix users can still patch gleam_stdlib on their
+# projects). Otherwise, you can depend on the fork directly.
+glistix_stdlib = ">= 0.34.0 and < 2.0.0"
+
+[dev-dependencies]
+glistix_gleeunit = ">= 1.0.0 and < 2.0.0"
+
+# The [glistix.preview] namespace contains useful settings which will be needed
+# during Glistix beta. In the future, we hope these won't be necessary anymore.
+# None of the settings below are recognized by the official Gleam compiler.
+#
+# For more information on those options, check out the Glistix handbook at
+# this link: https://glistix.github.io/book/
+
+# The section below allows replacing transitive dependencies with other packages,
+# such as forks providing support for the Nix target. For example, `gleam_stdlib`
+# does not support the Nix target, so we replace it with the `glistix_stdlib` fork.
+# Replacing Hex packages with local packages is also supported (and Git packages
+# in a future Glistix version).
+#
+# Specifying a version (or local path) is always required.
+#
+# NOTE: This section is ignored when publishing to Hex. It is only read on top-level
+# Glistix projects. However, it can still be useful on packages to allow running unit
+# tests, so you can keep this here regardless. Just keep this in mind if a user
+# complains about a missing dependency: they are responsible for patching.
+[glistix.preview.patch]
+# Replaces 'gleam_stdlib' with 'glistix_stdlib' on all transitive dependencies.
+# This is needed so stdlib will work on the Nix target.
+gleam_stdlib = { name = "glistix_stdlib", version = ">= 0.34.0 and < 2.0.0" }
+# otherpkg = { version = "3.4.5" } # replace with another Hex version
+# anotherpkg = { path = "./external/submodule1" } # replace with local package
+# renamedpkg = { name = "differentpkg", path = "./external/submodule2" }
+```

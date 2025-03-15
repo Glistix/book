@@ -8,6 +8,8 @@ If you'd like to **give Glistix a quick spin** before installing, make sure to c
 
 If you **have a question or would like to contribute**, please **join our Zulip chat** with [this invite link](https://glistix.zulipchat.com/join/dj7k33san27nujoppkmuqalc/). The chat's history [can be accessed here](https://glistix.zulipchat.com/).
 
+If you came to this page looking for more information on patching dependencies for Nix compatibility, check out ["Overriding incompatible packages"](./recipes/overriding-packages.md).
+
 This book aims to explain many core concepts related to Glistix, possibly helping you use it more effectively for your projects.
 
-Please note that this book is a work in progress! There's much more to come.
+Please note that this book is a work in progress! There's much more to come. You can contribute to the book either on [GitHub](https://github.com/glistix/book) or [Codeberg](https://codeberg.org/glistix/book).
