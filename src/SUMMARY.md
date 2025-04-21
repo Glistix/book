@@ -50,3 +50,4 @@
     - [Glistix v0.5.0 (2024-12-23)](./compiler/changelog/v0-5-0.md)
     - [Glistix v0.6.0 (2025-01-19)](./compiler/changelog/v0-6-0.md)
     - [Glistix v0.7.0 (2025-03-15)](./compiler/changelog/v0-7-0.md)
+    - [Glistix v0.8.0 (Unreleased)](./compiler/changelog/v0-8-0.md)
