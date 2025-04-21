@@ -35,6 +35,8 @@ This lead to changes across many files in the compiler, mostly related to replic
 
 - We have **added some more useful error hints**, as well as **Glistix-exclusive errors,** at `compiler-core/src/error.rs`.
 
+- To implement errors when specifying invalid integer and float literals on the Nix target, we have modified `compiler-core/type/{error.rs,expression.rs,pattern.rs}` adding the necessary checks. (Added in [#54](https://github.com/Glistix/glistix/pull/54))
+
 - We have added **Nix syntax highlighting support** to **packages' generated documentation** (through `glistix docs`). The relevant `highlight.js`-compatible file is at `compiler-core/templates/docs-js/highlightjs-nix.min.js`.
 
 - It is worth noting that we have **reutilized most of the Gleam compiler's GitHub Actions workflows** for our own usage in CI and other tasks. However, **noteworthy changes were made** to better adapt them to Glistix's needs.
